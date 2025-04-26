@@ -30,7 +30,7 @@ class MainActivity : FlowActivity<MainComponent>(R.layout.activity_main) {
 
     private fun initNavigationBar() = with(binding.bottomBar) {
         itemActiveIndicatorColor =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white))
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.transparent))
         setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_item_history -> { true }
