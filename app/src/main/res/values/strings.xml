@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">lunch</string>
+    <string name="enter">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="entrance">Вход</string>
+    <string name="regisration">Регистрация</string>
+    <string name="sign_up_question">Еще нет аккаунта? Зарегистрироваться</string>
+    <string name="sign_in_question">Уже зарегистрированы? Войти</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="telegram_contact">Ник в телеграм</string>
+    <string name="office_pick">Офис</string>
 </resources>
