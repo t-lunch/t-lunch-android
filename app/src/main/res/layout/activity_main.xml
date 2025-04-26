@@ -28,6 +28,7 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:background="@color/white"
+        app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
