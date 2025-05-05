@@ -8,11 +8,12 @@ import ru.tinkoff.kotea.android.lifecycle.collectOnCreate
 import ru.tinkoff.kotea.android.storeViaViewModel
 import ru.tinkoff.lunch.screens.main.di.MainComponent
 import ru.tinkoff.lunch.R
-import ru.tinkoff.lunch.common.recycler.items.ItemHeader
 import ru.tinkoff.lunch.databinding.FragmentMainBinding
+import ru.tinkoff.lunch.screens.main.presentation.MainNews
 import ru.tinkoff.lunch.screens.main.ui.mapper.MainUiState
 import ru.tinkoff.lunch.screens.main.ui.recycler.MainFragmentHolderFactory
 import ru.tinkoff.lunch.utils.views.FlowFragment
+import ru.tinkoff.lunch.utils.views.showAlert
 import ru.tinkoff.mobile.tech.ti_recycler.base.ViewTyped
 import ru.tinkoff.mobile.tech.ti_recycler_coroutines.TiRecyclerCoroutines
 
@@ -27,9 +28,10 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         store.collectOnCreate(
-            lifecycleOwner = this,
-            stateCollector = null,
-            newsCollector = null,
+            fragment = this,
+            uiStateMapper = component.uiStateMapper,
+            stateCollector = ::render,
+            newsCollector = ::news,
         )
     }
 
@@ -38,15 +40,33 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main) {
         initRecycler()
     }
 
-    private fun render(state: MainUiState) {
-
-    }
-
     private fun initRecycler() {
         recycler = TiRecyclerCoroutines(
             binding.recyclerView,
             MainFragmentHolderFactory()
         )
-        recycler.setItems(listOf(ItemHeader(text = "Обеды")))
+    }
+
+    private fun render(state: MainUiState) {
+        recycler.setItems(items = state.items)
+        controlShimmersVisibility(isLoading = state.areShimmersVisible)
+    }
+
+    private fun news(news: MainNews) {
+        when (news) {
+            is MainNews.ShowError -> showAlert(message = news.error.message)
+        }
+    }
+
+    private fun controlShimmersVisibility(isLoading: Boolean) = with(binding) {
+        if (isLoading) {
+            shimmers.startShimmer()
+        } else {
+            shimmers.apply {
+                stopShimmer()
+                visibility = View.GONE
+            }
+            recyclerView.visibility = View.VISIBLE
+        }
     }
 }
