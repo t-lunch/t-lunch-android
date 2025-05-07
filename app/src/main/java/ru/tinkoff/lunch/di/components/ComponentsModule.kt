@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.root.di.EntrypointComponent
 import ru.tinkoff.lunch.root.di.EntrypointModule
 import ru.tinkoff.lunch.root.sign_in.di.SignInComponent
@@ -16,20 +17,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class ComponentsModule {
+internal object ComponentsModule {
 
     @Provides
     @Singleton
     fun provideEntrypointComponent(
-//        profileRepository: ProfileRepository,
-//        userInfoManager: UserInfoManager,
-//        promptsRepository: PromptsRepository,
+        authRepository: AuthRepository,
     ): EntrypointComponent {
         return object : EntrypointComponent(),
             EntrypointModule by EntrypointModule(
-//                profileRepository,
-//                userInfoManager,
-//                promptsRepository,
+                authRepository = authRepository,
             ) {}
     }
 
