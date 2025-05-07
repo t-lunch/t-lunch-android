@@ -5,6 +5,7 @@ import ru.tinkoff.kotea.android.ui.UiStateMapper
 import ru.tinkoff.lunch.common.lce.LceState
 import ru.tinkoff.lunch.common.recycler.items.ItemHeader
 import ru.tinkoff.lunch.screens.main.presentation.MainState
+import ru.tinkoff.lunch.screens.main.ui.recycler.model.ItemLunchEvent
 
 class MainUiStateMapper : UiStateMapper<MainState, MainUiState> {
 
@@ -15,6 +16,9 @@ class MainUiStateMapper : UiStateMapper<MainState, MainUiState> {
                 is LceState.Content -> addAll(
                     listOf(
                         ItemHeader(text = "Обеды"),
+                        ItemLunchEvent(),
+                        ItemLunchEvent(),
+                        ItemLunchEvent(),
                     )
                 )
                 is LceState.Error -> Unit

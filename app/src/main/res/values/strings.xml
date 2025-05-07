@@ -1,14 +1,24 @@
 <resources>
-    <string name="app_name">lunch</string>
-    <string name="enter">Войти</string>
-    <string name="password">Пароль</string>
-    <string name="login">Логин</string>
-    <string name="entrance">Вход</string>
-    <string name="regisration">Регистрация</string>
-    <string name="sign_up_question">Еще нет аккаунта? Зарегистрироваться</string>
-    <string name="sign_in_question">Уже зарегистрированы? Войти</string>
-    <string name="name">Имя</string>
-    <string name="surname">Фамилия</string>
-    <string name="telegram_contact">Ник в телеграм</string>
-    <string name="office_pick">Офис</string>
+    <string name="app_name" translatable="false">lunch</string>
+    <string name="enter" translatable="false">Войти</string>
+    <string name="password" translatable="false">Пароль</string>
+    <string name="login" translatable="false">Логин</string>
+    <string name="entrance" translatable="false">Вход</string>
+    <string name="regisration" translatable="false">Регистрация</string>
+    <string name="sign_up_question" translatable="false">Еще нет аккаунта? Зарегистрироваться</string>
+    <string name="sign_in_question" translatable="false">Уже зарегистрированы? Войти</string>
+    <string name="name" translatable="false">Имя</string>
+    <string name="surname" translatable="false">Фамилия</string>
+    <string name="telegram_contact" translatable="false">Ник в телеграм</string>
+    <string name="office_pick" translatable="false">Офис</string>
+    <string name="join" translatable="false">Присоединиться</string>
+    <string name="lunch_from" translatable="false">Обед от %s</string>
+    <string name="time_of_lunch" translatable="false">%s</string>
+
+    <plurals name="number_of_participants">
+        <item quantity="one">%d участник</item>
+        <item quantity="few">%d участника</item>
+        <item quantity="many">%d участников</item>
+        <item quantity="other">%d участников</item>
+    </plurals>
 </resources>
