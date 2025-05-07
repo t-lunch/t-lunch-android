@@ -15,6 +15,8 @@ internal class SignUpUpdate :
     private fun NextBuilder.handleUiEvent(event: SignUpUiEvent) {
         when (event) {
             is SignUpUiEvent.SignInClicked -> news(SignUpNews.OpenSignIn)
+            is SignUpUiEvent.EmojiClicked -> state { copy(selectedEmoji = event.emoji) }
+            is SignUpUiEvent.OfficeClicked -> state { copy(selectedOffice = event.office) }
         }
     }
 

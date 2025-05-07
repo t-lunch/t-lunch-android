@@ -14,6 +14,9 @@
     <string name="join" translatable="false">Присоединиться</string>
     <string name="lunch_from" translatable="false">Обед от %s</string>
     <string name="time_of_lunch" translatable="false">%s</string>
+    <string name="avatar">Аватар</string>
+    <string name="office">Офис</string>
+    <string name="signup">Зарегистрироваться</string>
 
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>
