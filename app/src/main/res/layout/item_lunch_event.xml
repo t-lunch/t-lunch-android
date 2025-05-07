@@ -8,12 +8,12 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:clickable="false"
-    app:cardElevation="32dp"
-    android:outlineSpotShadowColor="@color/card_shadow_color"
     android:focusable="false"
     android:focusableInTouchMode="false"
+    android:outlineSpotShadowColor="@color/card_shadow_color"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="32dp">
+    app:cardCornerRadius="32dp"
+    app:cardElevation="32dp">
 
     <LinearLayout
         android:layout_width="match_parent"
