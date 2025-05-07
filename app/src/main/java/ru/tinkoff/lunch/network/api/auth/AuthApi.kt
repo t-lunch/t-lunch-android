@@ -17,7 +17,7 @@ interface AuthApi {
         @Body body: SignUpBody,
     ): ApiResponse<SignUpResponse>
 
-    @POST("v1/login")
+    @POST("v1/signin")
     suspend fun login(
         @Body body: LoginBody,
     ): ApiResponse<LoginResponse>

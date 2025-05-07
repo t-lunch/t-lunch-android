@@ -1,6 +1,7 @@
 package ru.tinkoff.lunch.root.di
 
 import ru.tinkoff.kotea.core.KoteaStore
+import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.root.presentation.EntrypointCommand
 import ru.tinkoff.lunch.root.presentation.EntrypointState
 import ru.tinkoff.lunch.root.presentation.EntrypointStore
@@ -13,9 +14,7 @@ internal interface EntrypointModule {
 }
 
 internal fun EntrypointModule(
-//    profileRepository: ProfileRepository,
-//    userInfoManager: UserInfoManager,
-//    promptsRepository: PromptsRepository,
+    authRepository: AuthRepository,
 ) = object : EntrypointModule {
     override fun getEntrypointStore(): EntrypointStore {
         return KoteaStore(
@@ -23,13 +22,8 @@ internal fun EntrypointModule(
             initialCommands = listOf(EntrypointCommand.Authenticate),
             commandsFlowHandlers = listOf(
                 AuthenticationCommandHandler(
-//                    profileRepository = profileRepository,
-//                    userInfoManager = userInfoManager
+                    authRepository = authRepository,
                 ),
-//                GetPromptsCommandHandler(
-//                    userInfoManager = userInfoManager,
-//                    promptsRepository = promptsRepository,
-//                ),
             ),
             update = EntrypointUpdate(),
         )

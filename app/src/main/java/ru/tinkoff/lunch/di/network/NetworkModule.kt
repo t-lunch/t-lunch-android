@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import ru.tinkoff.lunch.network.api.auth.AuthApi
+import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.common.authenticator.AuthAuthenticator
 import ru.tinkoff.lunch.network.common.interceptor.AuthInterceptor
 import ru.tinkoff.lunch.network.common.token.JwtTokenDataStore
@@ -24,7 +29,7 @@ import ru.tinkoff.lunch.network.common.token.JwtTokenManager
 import javax.inject.Singleton
 
 private const val USER_PREFERENCES = "user_preferences"
-//private const val BASE_URL = "http://95.174.89.70/api/v0/"
+private const val BASE_URL = "http://10.0.2.2:8080/"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -68,10 +73,31 @@ object NetworkModule {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
-            //.addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .authenticator(authAuthenticator)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthApi(
+        okHttpClient: OkHttpClient,
+    ): AuthApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(AuthApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthRepository(
+        authApi: AuthApi,
+    ): AuthRepository {
+        return AuthRepository(authApi = authApi)
     }
 }

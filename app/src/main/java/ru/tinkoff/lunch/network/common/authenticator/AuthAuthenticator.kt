@@ -3,6 +3,7 @@ package ru.tinkoff.lunch.network.common.authenticator
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.isSuccess
+import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -18,21 +19,24 @@ import ru.tinkoff.lunch.network.api.auth.model.refresh.RefreshResponse
 import ru.tinkoff.lunch.network.common.token.JwtTokenManager
 import javax.inject.Inject
 
+private const val BASE_URL = "http://10.0.2.2:8080/"
+
 class AuthAuthenticator @Inject constructor(
     private val tokenManager: JwtTokenManager,
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        val token = runBlocking { tokenManager.getAccessJwt() }
         return runBlocking {
-            val newToken = getNewToken(token)
+            val currentRefreshToken = tokenManager.getRefreshJwt()
+            val newAccessToken = getNewAccessToken(refreshToken = currentRefreshToken)
 
             // Couldn't refresh the token, so restart the login process
-            if (!newToken.isSuccess || newToken.getOrNull() == null) {
+            if (!newAccessToken.isSuccess || newAccessToken.getOrNull() == null) {
                 tokenManager.removeAccessToken()
+                // todo: add router to navigate to SignIn screen
             }
 
-            newToken.getOrNull()?.let {
+            newAccessToken.getOrNull()?.let {
                 tokenManager.saveAccessJwt(it.accessToken)
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.accessToken}")
@@ -41,16 +45,21 @@ class AuthAuthenticator @Inject constructor(
         }
     }
 
-    private suspend fun getNewToken(refreshToken: String?): ApiResponse<RefreshResponse> {
+    private suspend fun getNewAccessToken(refreshToken: String?): ApiResponse<RefreshResponse> {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://jwt-test-api.onrender.com/api/")
+            .baseUrl(BASE_URL)
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
+
         val api = retrofit.create(AuthApi::class.java)
         return api.refresh(body = RefreshBody(refreshToken = refreshToken))
     }
