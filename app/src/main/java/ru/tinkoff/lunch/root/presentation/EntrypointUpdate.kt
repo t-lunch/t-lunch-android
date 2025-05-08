@@ -8,6 +8,20 @@ internal class EntrypointUpdate :
     override fun NextBuilder.update(event: EntrypointEvent) {
         when (event) {
             is EntrypointCommandResultEvent -> handleCommandResultEvent(event)
+            is EntrypointUiEvent -> handleUiEvent(event)
+        }
+    }
+
+    private fun NextBuilder.handleUiEvent(event: EntrypointUiEvent) {
+        when (event) {
+            is EntrypointUiEvent.Init -> {
+                if (event.isDeepLogout) {
+                    commands(EntrypointCommand.DeleteTokens)
+                    news(EntrypointNews.OpenSignInScreen)
+                } else {
+                    commands(EntrypointCommand.Authenticate)
+                }
+            }
         }
     }
 
@@ -16,6 +30,7 @@ internal class EntrypointUpdate :
             is EntrypointCommandResultEvent.AuthenticationPassed -> {
                 news(EntrypointNews.OpenMainScreen)
             }
+
             is EntrypointCommandResultEvent.AuthenticationFailed -> {
                 news(EntrypointNews.OpenSignInScreen)
             }

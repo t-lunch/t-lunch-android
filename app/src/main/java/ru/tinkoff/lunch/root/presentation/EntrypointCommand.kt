@@ -1,7 +1,7 @@
 package ru.tinkoff.lunch.root.presentation
 
-internal sealed interface EntrypointCommand {
+sealed interface EntrypointCommand {
 
     object Authenticate : EntrypointCommand
-    // todo: object GetLunches : EntrypointCommand
+    object DeleteTokens : EntrypointCommand
 }
