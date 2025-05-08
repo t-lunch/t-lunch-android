@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">lunch</string>
+    <string name="app_name" translatable="false">Т-Обеды</string>
     <string name="enter" translatable="false">Войти</string>
     <string name="password" translatable="false">Пароль</string>
     <string name="login" translatable="false">Логин</string>
