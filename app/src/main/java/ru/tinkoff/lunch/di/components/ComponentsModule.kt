@@ -14,6 +14,8 @@ import ru.tinkoff.lunch.root.sign_up.di.SignUpComponent
 import ru.tinkoff.lunch.root.sign_up.di.SignUpModule
 import ru.tinkoff.lunch.screens.main.di.MainComponent
 import ru.tinkoff.lunch.screens.main.di.MainModule
+import ru.tinkoff.lunch.screens.profile.di.ProfileComponent
+import ru.tinkoff.lunch.screens.profile.di.ProfileModule
 import javax.inject.Singleton
 
 @Module
@@ -64,5 +66,12 @@ internal object ComponentsModule {
     fun provideMainComponent(): MainComponent {
         return object : MainComponent(),
             MainModule by MainModule() {}
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileComponent(): ProfileComponent {
+        return object : ProfileComponent(),
+            ProfileModule by ProfileModule() {}
     }
 }

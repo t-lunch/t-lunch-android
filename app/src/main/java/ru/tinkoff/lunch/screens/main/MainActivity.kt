@@ -33,11 +33,18 @@ class MainActivity : FlowActivity<MainComponent>(R.layout.activity_main) {
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.transparent))
         selectedItemId = R.id.menu_item_home
 
+        setOnItemReselectedListener {  }
         setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_item_history -> { true }
-                R.id.menu_item_home -> { true }
-                R.id.menu_item_profile -> { true }
+                R.id.menu_item_home -> {
+                    router.replaceScreen(Screens.MainScreen())
+                    true
+                }
+                R.id.menu_item_profile -> {
+                    router.replaceScreen(Screens.ProfileScreen())
+                    true
+                }
                 else -> false
             }
         }

@@ -28,6 +28,9 @@
     <string name="default_alert_message" translatable="false">Что-то пошло не так</string>
     <string name="default_alert_positive_button_message" translatable="false">Ок</string>
     <string name="please_wait" translatable="false">Пожалуйста, подождите...</string>
+    <string name="profile" translatable="false">Профиль</string>
+    <string name="telegram" translatable="false">Телеграм</string>
+    <string name="logout" translatable="false">Выйти</string>
 
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>
