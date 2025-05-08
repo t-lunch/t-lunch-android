@@ -19,8 +19,8 @@ internal class AuthenticationCommandHandler(
         return commands.filterIsInstance<EntrypointCommand.Authenticate>()
             .transform {
                 // todo: trigger here request with userId (getLunches, for example)
-                authRepository.login(body = LoginBody(email = "test@email.com", password = "test-pass"))
-                delay(1000)
+//                authRepository.login(body = LoginBody(email = "test@email.com", password = "test-pass"))
+//                delay(1000)
                 emit(AuthenticationFailed)
             }
     }
