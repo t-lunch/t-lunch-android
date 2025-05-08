@@ -24,10 +24,12 @@ internal object ComponentsModule {
     @Singleton
     fun provideEntrypointComponent(
         authRepository: AuthRepository,
+        tokenManager: JwtTokenManager,
     ): EntrypointComponent {
         return object : EntrypointComponent(),
             EntrypointModule by EntrypointModule(
                 authRepository = authRepository,
+                tokenManager = tokenManager,
             ) {}
     }
 
