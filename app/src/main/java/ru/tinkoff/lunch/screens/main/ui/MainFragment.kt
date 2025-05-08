@@ -13,7 +13,7 @@ import ru.tinkoff.lunch.screens.main.presentation.MainNews
 import ru.tinkoff.lunch.screens.main.ui.mapper.MainUiState
 import ru.tinkoff.lunch.screens.main.ui.recycler.MainFragmentHolderFactory
 import ru.tinkoff.lunch.utils.views.FlowFragment
-import ru.tinkoff.lunch.utils.views.showAlert
+import ru.tinkoff.lunch.utils.views.showAlertSnackbar
 import ru.tinkoff.mobile.tech.ti_recycler.base.ViewTyped
 import ru.tinkoff.mobile.tech.ti_recycler_coroutines.TiRecyclerCoroutines
 
@@ -54,7 +54,7 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main) {
 
     private fun news(news: MainNews) {
         when (news) {
-            is MainNews.ShowError -> showAlert(message = news.error.message)
+            is MainNews.ShowError -> showAlertSnackbar(message = news.error.message)
         }
     }
 

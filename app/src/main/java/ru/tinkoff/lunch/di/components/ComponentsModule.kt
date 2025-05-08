@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
+import ru.tinkoff.lunch.network.common.token.JwtTokenManager
 import ru.tinkoff.lunch.root.di.EntrypointComponent
 import ru.tinkoff.lunch.root.di.EntrypointModule
 import ru.tinkoff.lunch.root.sign_in.di.SignInComponent
@@ -39,9 +40,15 @@ internal object ComponentsModule {
 
     @Provides
     @Singleton
-    fun provideSignUpComponent(): SignUpComponent {
+    fun provideSignUpComponent(
+        authRepository: AuthRepository,
+        tokenManager: JwtTokenManager,
+    ): SignUpComponent {
         return object : SignUpComponent(),
-            SignUpModule by SignUpModule() {}
+            SignUpModule by SignUpModule(
+                authRepository = authRepository,
+                tokenManager = tokenManager,
+            ) {}
     }
 
     @Provides

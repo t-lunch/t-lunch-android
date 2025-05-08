@@ -1,5 +1,7 @@
 package ru.tinkoff.lunch.root.sign_up.presentation
 
-internal sealed interface SignUpCommand {
+import ru.tinkoff.lunch.network.api.auth.model.signup.SignUpBody
 
+sealed interface SignUpCommand {
+    data class SignUp(val signUpBody: SignUpBody) : SignUpCommand
 }

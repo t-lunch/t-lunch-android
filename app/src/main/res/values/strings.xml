@@ -18,6 +18,17 @@
     <string name="office" translatable="false">Офис</string>
     <string name="signup" translatable="false">Зарегистрироваться</string>
 
+    <string name="login_error_message" translatable="false">Введите логин</string>
+    <string name="password_error_message" translatable="false">Введите пароль</string>
+    <string name="name_error_message" translatable="false">Введите имя</string>
+    <string name="surname_error_message" translatable="false">Введите фамилию</string>
+    <string name="telegram_error_message" translatable="false">Введите ник в телеграм</string>
+
+    <string name="default_alert_title" translatable="false">Ошибка</string>
+    <string name="default_alert_message" translatable="false">Что-то пошло не так</string>
+    <string name="default_alert_positive_button_message" translatable="false">Ок</string>
+    <string name="please_wait" translatable="false">Пожалуйста, подождите...</string>
+
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>
         <item quantity="few">%d участника</item>
