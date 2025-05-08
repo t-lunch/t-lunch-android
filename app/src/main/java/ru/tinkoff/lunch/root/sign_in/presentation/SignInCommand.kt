@@ -1,5 +1,8 @@
 package ru.tinkoff.lunch.root.sign_in.presentation
 
-internal sealed interface SignInCommand {
-
+sealed interface SignInCommand {
+    data class SignIn(
+        val login: String,
+        val password: String,
+    ) : SignInCommand
 }

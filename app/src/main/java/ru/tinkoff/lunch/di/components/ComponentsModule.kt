@@ -33,9 +33,15 @@ internal object ComponentsModule {
 
     @Provides
     @Singleton
-    fun provideSignInComponent(): SignInComponent {
+    fun provideSignInComponent(
+        authRepository: AuthRepository,
+        tokenManager: JwtTokenManager,
+    ): SignInComponent {
         return object : SignInComponent(),
-            SignInModule by SignInModule() {}
+            SignInModule by SignInModule(
+                authRepository = authRepository,
+                tokenManager = tokenManager,
+            ) {}
     }
 
     @Provides

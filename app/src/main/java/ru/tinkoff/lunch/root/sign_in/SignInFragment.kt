@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import ru.tinkoff.kotea.android.lifecycle.collectOnCreate
@@ -15,9 +16,11 @@ import ru.tinkoff.lunch.navigation.Screens
 import ru.tinkoff.lunch.root.sign_in.presentation.SignInNews
 import ru.tinkoff.lunch.root.sign_in.presentation.SignInNews.OpenMainScreen
 import ru.tinkoff.lunch.root.sign_in.presentation.SignInNews.OpenSignUp
+import ru.tinkoff.lunch.root.sign_in.presentation.SignInNews.ShowLoading
 import ru.tinkoff.lunch.root.sign_in.presentation.SignInUiEvent
 import ru.tinkoff.lunch.utils.views.FlowFragment
 import ru.tinkoff.lunch.utils.views.makeTextLink
+import ru.tinkoff.lunch.utils.views.showAlertDialog
 
 @AndroidEntryPoint
 class SignInFragment : FlowFragment<SignInComponent>(R.layout.fragment_sign_in) {
@@ -44,13 +47,53 @@ class SignInFragment : FlowFragment<SignInComponent>(R.layout.fragment_sign_in) 
             typeface = Typeface.DEFAULT_BOLD,
             action = { store.dispatch(SignInUiEvent.SignUpClicked) },
         )
-        binding.loginButton.setOnClickListener { store.dispatch(SignInUiEvent.LoginClicked) }
+        initSignInButton()
+    }
+
+    private fun initSignInButton() {
+        binding.loginButton.setOnClickListener {
+            var isAllFieldsCorrect = true
+
+            if (binding.loginField.editText?.text.isNullOrEmpty()) {
+                isAllFieldsCorrect = false
+                binding.loginField.editText?.error = getString(R.string.login_error_message)
+            }
+            if (binding.passwordField.editText?.text.isNullOrEmpty()) {
+                isAllFieldsCorrect = false
+                binding.passwordField.editText?.error = getString(R.string.password_error_message)
+            }
+
+            if (isAllFieldsCorrect) {
+                store.dispatch(
+                    SignInUiEvent.LoginClicked(
+                        login = binding.loginField.editText!!.text.toString(),
+                        password = binding.passwordField.editText!!.text.toString(),
+                    )
+                )
+            }
+        }
     }
 
     private fun news(news: SignInNews) {
+        if (news !is ShowLoading) hideBlockingLoading()
         when (news) {
             is OpenSignUp -> router.replaceScreen(Screens.SignUpScreen())
             is OpenMainScreen -> router.newRootChain(Screens.MainActivityScreen())
+            is ShowLoading -> showBlockingLoading()
+            is SignInNews.ShowError -> showAlertDialog(message = news.message)
         }
+    }
+
+    private fun showBlockingLoading() {
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        )
+        binding.progressBarLayout.root.visibility = View.VISIBLE
+    }
+
+    private fun hideBlockingLoading() {
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        binding.progressBarLayout.root.visibility = View.GONE
     }
 }
