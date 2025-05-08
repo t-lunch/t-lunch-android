@@ -21,7 +21,7 @@ class SignUpCommandHandler(
 
     override fun handle(commands: Flow<SignUpCommand>): Flow<SignUpEvent> {
         return commands.filterIsInstance<SignUpCommand.SignUp>().transform { command ->
-            delay(1500)
+            delay(350)
             authRepository.signUp(body = command.signUpBody)
                 .suspendOnSuccess {
                     with(this.data) {

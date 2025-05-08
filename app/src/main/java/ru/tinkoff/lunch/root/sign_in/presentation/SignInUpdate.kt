@@ -15,13 +15,17 @@ internal class SignInUpdate :
     private fun NextBuilder.handleUiEvent(event: SignInUiEvent) {
         when (event) {
             is SignInUiEvent.SignUpClicked -> news(SignInNews.OpenSignUp)
-            is SignInUiEvent.LoginClicked -> news(SignInNews.OpenMainScreen)
+            is SignInUiEvent.LoginClicked -> {
+                news(SignInNews.ShowLoading)
+                commands(SignInCommand.SignIn(event.login, event.password))
+            }
         }
     }
 
     private fun NextBuilder.handleCommandResultEvent(event: SignInCommandResultEvent) {
         when (event) {
-            else -> Unit
+            is SignInCommandResultEvent.SignInSuccess -> news(SignInNews.OpenMainScreen)
+            is SignInCommandResultEvent.SignInError -> news(SignInNews.ShowError(event.message))
         }
     }
 }

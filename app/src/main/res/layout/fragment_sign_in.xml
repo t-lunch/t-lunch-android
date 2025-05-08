@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:importantForAutofill="noExcludeDescendants"
+    tools:ignore="UnusedAttribute">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,12 +39,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="test@email.com" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
+            android:id="@+id/password_field"
             style="@style/inputTextFieldContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="test-pass" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,5 +84,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/progressBarLayout"
+        layout="@layout/layout_progress_bar_with_text"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
