@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_item_history"
-        android:icon="@drawable/ic_clock"
-        android:title="clock" />
+        android:icon="@drawable/ic_history"
+        android:title="history" />
 
     <item
         android:id="@+id/menu_item_home"
