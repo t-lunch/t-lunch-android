@@ -10,4 +10,5 @@
     <color name="card_shadow_color">#3D000000</color>
     <color name="gray">#CC575757</color>
     <color name="red">#FFCC2F26</color>
+    <color name="chip_gray">#F7F7F8</color>
 </resources>

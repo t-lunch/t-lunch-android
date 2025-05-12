@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="16dp"
+    android:layout_marginEnd="6dp"
+    android:background="@drawable/shape_rounded_time">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="@string/kitchen"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</FrameLayout>

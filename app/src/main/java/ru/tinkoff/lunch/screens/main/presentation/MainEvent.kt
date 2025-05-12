@@ -5,7 +5,7 @@ import ru.tinkoff.lunch.network.api.events.model.LunchEvent
 internal sealed interface MainEvent
 
 internal sealed interface MainUiEvent : MainEvent {
-
+    object CreateLunchClicked : MainUiEvent
 }
 
 internal sealed interface MainCommandResultEvent : MainEvent {

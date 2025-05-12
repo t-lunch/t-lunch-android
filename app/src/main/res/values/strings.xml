@@ -31,6 +31,15 @@
     <string name="profile" translatable="false">Профиль</string>
     <string name="telegram" translatable="false">Телеграм</string>
     <string name="logout" translatable="false">Выйти</string>
+    <string name="new_event" translatable="false">Новое событие</string>
+    <string name="time" translatable="false">Время</string>
+    <string name="place" translatable="false">Место</string>
+    <string name="custom_place" translatable="false">Свое место</string>
+    <string name="kitchen" translatable="false">Кухня</string>
+    <string name="enter_custom_place_name" translatable="false">Введите название места</string>
+    <string name="notes" translatable="false">Примечания</string>
+    <string name="notes_hint" translatable="false">Место сбора и т.п. (необязательно)</string>
+    <string name="create" translatable="false">Создать</string>
 
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>
