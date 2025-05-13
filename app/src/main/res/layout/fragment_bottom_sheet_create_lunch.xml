@@ -5,18 +5,20 @@
     style="@style/Theme.BottomSheetDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:paddingHorizontal="16dp"
     android:paddingBottom="32dp"
     app:behavior_draggable="true">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/drag_handle"
-        app:tint="@color/shimmerColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/shimmerColor" />
 
     <TextView
         android:id="@+id/header"
@@ -45,6 +47,11 @@
         android:id="@+id/time_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/time_subheader" />
 
@@ -67,9 +74,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/place_subheader">
 
-        <include layout="@layout/item_lunch_place_kitchen" />
+        <include
+            android:id="@+id/place_kitchen"
+            layout="@layout/item_lunch_place_kitchen" />
 
-        <include layout="@layout/item_lunch_place_other" />
+        <include
+            android:id="@+id/place_other"
+            layout="@layout/item_lunch_place_other" />
 
     </LinearLayout>
 
