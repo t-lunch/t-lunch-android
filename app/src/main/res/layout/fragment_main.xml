@@ -51,12 +51,12 @@
         android:backgroundTint="@color/white"
         android:contentDescription="@null"
         android:src="@drawable/ic_plus"
-        android:tint="@android:color/darker_gray"
         app:fabCustomSize="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="36dp"
         app:rippleColor="@color/shimmerColor"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:tint="@android:color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

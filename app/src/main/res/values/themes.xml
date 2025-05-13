@@ -38,10 +38,6 @@
         </item>
 
         <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/AppModalStyle</item>
-    </style>
-
-    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/shape_rounded_dialog</item>
     </style>
 </resources>
