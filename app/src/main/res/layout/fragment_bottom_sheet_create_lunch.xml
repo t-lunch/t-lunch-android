@@ -5,11 +5,10 @@
     style="@style/Theme.BottomSheetDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:paddingHorizontal="16dp"
+    android:importantForAutofill="noExcludeDescendants"
     android:paddingBottom="32dp"
-    app:behavior_draggable="true">
+    app:behavior_draggable="true"
+    tools:ignore="UnusedAttribute">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/drag_handle"
@@ -25,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-20dp"
+        android:paddingHorizontal="16dp"
         android:text="@string/new_event"
         android:textColor="@color/black"
         android:textSize="30sp"
@@ -36,6 +36,7 @@
         android:id="@+id/time_subheader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
         android:paddingTop="24dp"
         android:text="@string/time"
         android:textColor="@color/black"
@@ -50,6 +51,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +61,7 @@
         android:id="@+id/place_subheader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
         android:paddingTop="24dp"
         android:text="@string/place"
         android:textColor="@color/black"
@@ -71,16 +74,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/place_subheader">
 
-        <include
-            android:id="@+id/place_kitchen"
-            layout="@layout/item_lunch_place_kitchen" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/kitchenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginEnd="12dp"
+            android:includeFontPadding="false"
+            android:minWidth="8dp"
+            android:minHeight="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="@string/kitchen"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            app:backgroundTint="@color/yellow"
+            app:cornerRadius="8dp"
+            app:rippleColor="@color/transparent"
+            app:textAllCaps="false" />
 
-        <include
-            android:id="@+id/place_other"
-            layout="@layout/item_lunch_place_other" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/otherPlaceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginEnd="12dp"
+            android:includeFontPadding="false"
+            android:minWidth="8dp"
+            android:minHeight="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="@string/custom_place"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:backgroundTint="@color/chip_gray"
+            app:cornerRadius="8dp"
+            app:textAllCaps="false" />
 
     </LinearLayout>
 
@@ -90,6 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_custom_place_name"
+        android:paddingHorizontal="16dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/place_layout"
@@ -107,6 +144,7 @@
         android:id="@+id/note_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
         android:paddingTop="24dp"
         android:text="@string/notes"
         android:textColor="@color/black"
@@ -120,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/notes_hint"
-        android:visibility="gone"
+        android:paddingHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/note_field"
         tools:visibility="visible">
@@ -137,6 +175,7 @@
         android:id="@+id/createButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/yellow"
         android:fontFeatureSettings="liga 0"
