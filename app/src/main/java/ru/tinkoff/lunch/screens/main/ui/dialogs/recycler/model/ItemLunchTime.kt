@@ -21,6 +21,6 @@ class LunchTimeItemHolder(view: View) : BaseViewHolder<ItemLunchTime>(view) {
     private val binding = ItemLunchTimeBinding.bind(view)
 
     override fun bind(item: ItemLunchTime) {
-        binding.time.text = item.time
+        binding.root.text = item.time
     }
 }
