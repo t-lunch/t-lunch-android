@@ -8,8 +8,6 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
-    android:clickable="false"
-    android:focusable="false"
     android:focusableInTouchMode="false"
     android:outlineSpotShadowColor="@color/card_shadow_color"
     app:cardBackgroundColor="@color/white"

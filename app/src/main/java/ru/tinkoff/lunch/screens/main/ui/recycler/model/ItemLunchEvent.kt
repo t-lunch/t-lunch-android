@@ -35,7 +35,10 @@ data class ItemLunchEvent(
         get() = R.layout.item_lunch_event
 }
 
-class LunchEventItemViewHolder(view: View) : BaseViewHolder<ItemLunchEvent>(view) {
+class LunchEventItemViewHolder(
+    view: View,
+    private val onCardClick: (String) -> Unit,
+) : BaseViewHolder<ItemLunchEvent>(view) {
 
     companion object {
         fun getLocalizedContext(context: Context, locale: Locale): Context {
@@ -66,6 +69,8 @@ class LunchEventItemViewHolder(view: View) : BaseViewHolder<ItemLunchEvent>(view
         binding.numberOfParticipants.text = numberOfParticipants
 
         binding.time.text = context.getString(R.string.time_of_lunch, formatTimeFromDate(item.time))
+
+        binding.card.setOnClickListener { onCardClick(item.uid) }
     }
 
     private fun formatTimeFromDate(date: Date): String {

@@ -9,6 +9,7 @@ import ru.tinkoff.kotea.android.storeViaViewModel
 import ru.tinkoff.lunch.screens.main.di.MainComponent
 import ru.tinkoff.lunch.R
 import ru.tinkoff.lunch.databinding.FragmentMainBinding
+import ru.tinkoff.lunch.navigation.Screens
 import ru.tinkoff.lunch.screens.main.presentation.MainNews
 import ru.tinkoff.lunch.screens.main.presentation.MainUiEvent
 import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet
@@ -49,7 +50,9 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main),
     private fun initRecycler() {
         recycler = TiRecyclerCoroutines(
             binding.recyclerView,
-            MainFragmentHolderFactory()
+            MainFragmentHolderFactory(
+                onCardClick = { store.dispatch(MainUiEvent.LunchDetailsClicked(it)) },
+            )
         )
     }
 
@@ -62,6 +65,9 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main),
         when (news) {
             is MainNews.ShowError -> showAlertSnackbar(message = news.error.message)
             is MainNews.OpenCreateLunchScreen -> showCreateLunchBottomSheet()
+            is MainNews.OpenLunchDetailsScreen -> {
+                router.navigateTo(Screens.LunchDetailsScreen(lunchId = news.id))
+            }
         }
     }
 

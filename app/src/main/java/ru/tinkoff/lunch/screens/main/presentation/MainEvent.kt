@@ -6,6 +6,7 @@ internal sealed interface MainEvent
 
 internal sealed interface MainUiEvent : MainEvent {
     object CreateLunchClicked : MainUiEvent
+    data class LunchDetailsClicked(val id: String) : MainUiEvent
 }
 
 internal sealed interface MainCommandResultEvent : MainEvent {

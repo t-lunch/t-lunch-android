@@ -38,6 +38,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 }
 
@@ -63,6 +67,7 @@ dependencies {
     // Kotea
     implementation(libs.kotea.core)
     implementation(libs.kotea.android)
+    implementation(libs.kotea.compose)
 
     // ViewBinding delegate
     implementation(libs.view.binding)
@@ -90,4 +95,16 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
+
+    // Compose
+    val composeBom = platform("androidx.compose:compose-bom:2025.05.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.activity.compose)
+
+    // Android Studio Preview support
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 }

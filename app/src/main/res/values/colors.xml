@@ -7,6 +7,7 @@
     <color name="gray_for_icon">#FFEAEAEA</color>
     <color name="transparent">#00000000</color>
     <color name="shimmerColor">#C2C2C2</color>
+    <color name="notes_color">#FFB2B7BD</color>
     <color name="card_shadow_color">#3D000000</color>
     <color name="gray">#CC575757</color>
     <color name="red">#FFCC2F26</color>

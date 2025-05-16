@@ -17,6 +17,7 @@ internal class MainUpdate : DslUpdate<MainState, MainEvent, MainCommand, MainNew
     private fun NextBuilder.handleUiEvent(event: MainUiEvent) {
         when (event) {
             MainUiEvent.CreateLunchClicked -> news(MainNews.OpenCreateLunchScreen)
+            is MainUiEvent.LunchDetailsClicked -> news(MainNews.OpenLunchDetailsScreen(event.id))
         }
     }
 

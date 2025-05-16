@@ -1,6 +1,7 @@
 [versions]
+activityCompose = "1.10.1"
 agp = "8.7.3"
-kotlin = "1.9.24"
+kotlin = "1.9.25"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -9,6 +10,10 @@ retrofit = "2.11.0"
 kotea = "1.2.5"
 
 [libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -28,6 +33,7 @@ shimmer = { module = "com.facebook.shimmer:shimmer", version = "0.5.0" }
 # Kotea
 kotea-core = { module = "ru.tinkoff.kotea:core", version.ref = "kotea" }
 kotea-android = { module = "ru.tinkoff.kotea:android", version.ref = "kotea" }
+kotea-compose = { module = "ru.tinkoff.kotea:compose", version.ref = "kotea" }
 
 # ViewBinding
 view-binding = { module = "com.github.kirich1409:viewbindingpropertydelegate-full", version = "1.5.9" }

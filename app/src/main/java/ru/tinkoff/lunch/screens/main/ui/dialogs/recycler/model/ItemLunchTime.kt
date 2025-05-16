@@ -8,6 +8,7 @@ import ru.tinkoff.mobile.tech.ti_recycler.base.ViewTyped
 
 data class ItemLunchTime(
     val time: String,
+    val isSelected: Boolean = false,
 ) : ViewTyped {
 
     override val uid: String
@@ -22,5 +23,14 @@ class LunchTimeItemHolder(view: View) : BaseViewHolder<ItemLunchTime>(view) {
 
     override fun bind(item: ItemLunchTime) {
         binding.root.text = item.time
+
+        val context = binding.root.context
+        binding.root.setBackgroundColor(
+            if (item.isSelected) {
+                context.getColor(R.color.yellow)
+            } else {
+                context.getColor(R.color.chip_gray)
+            }
+        )
     }
 }
