@@ -12,6 +12,8 @@ import ru.tinkoff.lunch.root.sign_in.di.SignInComponent
 import ru.tinkoff.lunch.root.sign_in.di.SignInModule
 import ru.tinkoff.lunch.root.sign_up.di.SignUpComponent
 import ru.tinkoff.lunch.root.sign_up.di.SignUpModule
+import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsComponent
+import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsModule
 import ru.tinkoff.lunch.screens.main.di.MainComponent
 import ru.tinkoff.lunch.screens.main.di.MainModule
 import ru.tinkoff.lunch.screens.profile.di.ProfileComponent
@@ -73,5 +75,12 @@ internal object ComponentsModule {
     fun provideProfileComponent(): ProfileComponent {
         return object : ProfileComponent(),
             ProfileModule by ProfileModule() {}
+    }
+
+    @Provides
+    @Singleton
+    fun provideLunchDetailsComponent(): LunchDetailsComponent {
+        return object : LunchDetailsComponent(),
+           LunchDetailsModule by LunchDetailsModule() {}
     }
 }

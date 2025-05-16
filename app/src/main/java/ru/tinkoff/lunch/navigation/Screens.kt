@@ -5,6 +5,7 @@ import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.tinkoff.lunch.root.EntrypointActivity
 import ru.tinkoff.lunch.root.sign_in.SignInFragment
 import ru.tinkoff.lunch.root.sign_up.SignUpFragment
+import ru.tinkoff.lunch.screens.lunch_details.LunchDetailsActivity
 import ru.tinkoff.lunch.screens.main.MainActivity
 import ru.tinkoff.lunch.screens.main.ui.MainFragment
 import ru.tinkoff.lunch.screens.profile.ProfileFragment
@@ -25,4 +26,8 @@ object Screens {
     fun MainScreen() = FragmentScreen { MainFragment() }
 
     fun ProfileScreen() = FragmentScreen { ProfileFragment() }
+
+    fun LunchDetailsScreen(lunchId: String) = ActivityScreen {
+        LunchDetailsActivity.createIntent(it, lunchId)
+    }
 }

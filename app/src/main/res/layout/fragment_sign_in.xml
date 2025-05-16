@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:text="test@email.com" />
+                android:text="pasha" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="test-pass" />
+                android:text="12345678" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
