@@ -122,18 +122,11 @@
 
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/joinButton"
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/compose_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:height="56dp"
-                android:backgroundTint="@color/yellow"
-                android:fontFeatureSettings="liga 0"
-                android:text="@string/join"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:cornerRadius="12dp" />
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
 

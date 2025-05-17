@@ -14,7 +14,7 @@ internal class GetLunchEventsCommandHandler : MainCommandsFlowHandler {
 
     override fun handle(commands: Flow<MainCommand>): Flow<MainEvent> {
         return commands.filterIsInstance<MainCommand.GetLunchEvents>().transform {
-            delay(2500)
+            delay(1000)
             emit(GetLunchEventsSuccess(listOf(LunchEvent(), LunchEvent(), LunchEvent())))
 //            emit(MainCommandResultEvent.GetLunchEventsError(Throwable()))
         }

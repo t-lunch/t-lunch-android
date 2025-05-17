@@ -3,6 +3,7 @@ package ru.tinkoff.lunch.screens.main.ui.recycler.model
 import android.content.Context
 import android.content.res.Configuration
 import android.view.View
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import ru.tinkoff.lunch.R
 import ru.tinkoff.lunch.databinding.ItemLunchEventBinding
 import ru.tinkoff.mobile.tech.ti_recycler.base.BaseViewHolder
@@ -19,6 +20,7 @@ data class ItemLunchEvent(
     val place: String = "Кухня",
     val time: Date = sampleTime,
     val numberOfParticipants: Int = 2,
+    val isLoading: Boolean = false,
 ) : ViewTyped {
 
     companion object {
@@ -38,6 +40,7 @@ data class ItemLunchEvent(
 class LunchEventItemViewHolder(
     view: View,
     private val onCardClick: (String) -> Unit,
+    private val onJoinClick: () -> Unit,
 ) : BaseViewHolder<ItemLunchEvent>(view) {
 
     companion object {
@@ -71,6 +74,13 @@ class LunchEventItemViewHolder(
         binding.time.text = context.getString(R.string.time_of_lunch, formatTimeFromDate(item.time))
 
         binding.card.setOnClickListener { onCardClick(item.uid) }
+
+        binding.composeButton.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                JoinButton(onClick = onJoinClick, isLoading = item.isLoading)
+            }
+        }
     }
 
     private fun formatTimeFromDate(date: Date): String {

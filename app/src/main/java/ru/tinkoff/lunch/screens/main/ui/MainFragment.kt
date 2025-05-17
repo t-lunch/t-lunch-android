@@ -52,6 +52,7 @@ class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main),
             binding.recyclerView,
             MainFragmentHolderFactory(
                 onCardClick = { store.dispatch(MainUiEvent.LunchDetailsClicked(it)) },
+                onJoinClick = { /*store.dispatch(MainUiEvent.JoinLunchClicked)*/ },
             )
         )
     }

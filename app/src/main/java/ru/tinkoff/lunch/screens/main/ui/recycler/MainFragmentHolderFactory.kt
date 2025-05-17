@@ -9,12 +9,13 @@ import ru.tinkoff.mobile.tech.ti_recycler_coroutines.base.CoroutinesHolderFactor
 
 class MainFragmentHolderFactory(
     private val onCardClick: (String) -> Unit,
+    private val onJoinClick: () -> Unit,
 ) : CoroutinesHolderFactory() {
 
     override fun createViewHolder(view: View, viewType: Int): BaseViewHolder<*>? {
         return when (viewType) {
             R.layout.item_header -> ItemHeaderViewHolder(view)
-            R.layout.item_lunch_event -> LunchEventItemViewHolder(view, onCardClick)
+            R.layout.item_lunch_event -> LunchEventItemViewHolder(view, onCardClick, onJoinClick)
             else -> null
         }
     }
