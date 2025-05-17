@@ -102,7 +102,7 @@ private fun InfoCircle(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardLunchPreview() {
+private fun CardLunchPreview() {
     CardLunch(
         lunch = LunchEvent(
             id = "123",

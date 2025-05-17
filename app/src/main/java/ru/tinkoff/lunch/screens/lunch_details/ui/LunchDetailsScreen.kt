@@ -192,7 +192,7 @@ private fun ParticipantItem(
     locale = "ru",
 )
 @Composable
-fun LunchEventScreenPreview() {
+private fun LunchEventScreenPreview() {
     MaterialTheme {
         LunchEventScreen(
             state = MutableStateFlow(

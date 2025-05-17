@@ -3,6 +3,7 @@ package ru.tinkoff.lunch.screens.main.ui.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -11,9 +12,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.tinkoff.lunch.common.lce.LceState
 import ru.tinkoff.lunch.network.api.events.model.LunchEvent
 import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepository
-import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentNews
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +38,7 @@ class MainFragmentViewModel @Inject constructor(
             MainUiEvent.CreateLunchClicked -> viewModelScope.launch {
                 _news.emit(MainFragmentNews.OpenCreateLunchScreen)
             }
+
             is MainUiEvent.LunchDetailsClicked -> viewModelScope.launch {
                 _news.emit(MainFragmentNews.OpenLunchDetailsScreen(event.id))
             }
@@ -45,17 +47,21 @@ class MainFragmentViewModel @Inject constructor(
 
     private fun loadLunches() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             try {
+                delay(1000)
                 // todo: val list = repository.getLunchEvents()
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
-                        lunches = listOf(LunchEvent(), LunchEvent(), LunchEvent()),
+                        lunches = LceState.Content(
+                            listOf(
+                                LunchEvent(),
+                                LunchEvent(),
+                                LunchEvent()
+                            )
+                        ),
                     )
                 }
             } catch (e: Throwable) {
-                _uiState.update { it.copy(isLoading = false) }
                 _news.emit(MainFragmentNews.ShowError(e))
             }
         }

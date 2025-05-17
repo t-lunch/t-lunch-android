@@ -34,6 +34,6 @@ fun DetailIcon(@DrawableRes icon: Int) {
 
 @Preview(showBackground = true)
 @Composable
-fun DetailIconPreview() {
+private fun DetailIconPreview() {
     DetailIcon(R.drawable.ic_clock)
 }

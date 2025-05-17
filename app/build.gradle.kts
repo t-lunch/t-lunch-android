@@ -3,6 +3,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-parcelize")
 }
 
@@ -62,7 +63,7 @@ dependencies {
     implementation(libs.coil)
 
     // Shimmers
-    implementation(libs.shimmer)
+    implementation(libs.compose.shimmer)
 
     // Kotea
     implementation(libs.kotea.core)

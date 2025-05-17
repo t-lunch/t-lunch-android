@@ -23,6 +23,6 @@ fun HeaderText(text: String) {
 
 @Preview(showBackground = true)
 @Composable
-fun HeaderTextPreview() {
+private fun HeaderTextPreview() {
     HeaderText(text = "Обеды")
 }

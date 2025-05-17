@@ -50,12 +50,12 @@ fun JoinButton(
 
 @Preview(showBackground = true)
 @Composable
-fun JoinButtonPreviewNoLoader() {
+private fun JoinButtonPreviewNoLoader() {
     JoinButton(onClick = {}, isLoading = false)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun JoinButtonPreviewWithLoader() {
+private fun JoinButtonPreviewWithLoader() {
     JoinButton(onClick = {}, isLoading = true)
 }
