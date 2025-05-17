@@ -1,4 +1,4 @@
-package ru.tinkoff.lunch.screens.main.compose
+package ru.tinkoff.lunch.screens.main.ui.compose
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

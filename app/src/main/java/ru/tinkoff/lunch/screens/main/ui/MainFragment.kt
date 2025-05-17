@@ -15,7 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.terrakok.cicerone.Router
 import dagger.hilt.android.AndroidEntryPoint
 import ru.tinkoff.lunch.navigation.Screens.LunchDetailsScreen
-import ru.tinkoff.lunch.screens.main.compose.MainFragmentScreen
+import ru.tinkoff.lunch.screens.main.ui.compose.MainFragmentScreen
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentNews
 import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet
 import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet.CreateLunchBottomSheetListener
