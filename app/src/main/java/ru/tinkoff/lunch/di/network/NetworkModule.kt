@@ -22,6 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.tinkoff.lunch.network.api.auth.AuthApi
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
+import ru.tinkoff.lunch.network.api.events.LunchEventsApi
+import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepository
 import ru.tinkoff.lunch.network.common.authenticator.AuthAuthenticator
 import ru.tinkoff.lunch.network.common.interceptor.AuthInterceptor
 import ru.tinkoff.lunch.network.common.token.JwtTokenDataStore
@@ -99,5 +101,27 @@ object NetworkModule {
         authApi: AuthApi,
     ): AuthRepository {
         return AuthRepository(authApi = authApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLunchesApi(
+        okHttpClient: OkHttpClient,
+    ): LunchEventsApi {
+        return Retrofit.Builder()
+          .baseUrl(BASE_URL)
+          .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+          .addConverterFactory(GsonConverterFactory.create())
+          .client(okHttpClient)
+          .build()
+          .create(LunchEventsApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLunchesRepository(
+        lunchEventsApi: LunchEventsApi,
+    ): LunchEventsRepository {
+        return LunchEventsRepository(lunchEventsApi = lunchEventsApi)
     }
 }

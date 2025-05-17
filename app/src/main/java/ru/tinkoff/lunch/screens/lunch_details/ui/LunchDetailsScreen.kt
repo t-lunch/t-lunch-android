@@ -65,7 +65,7 @@ fun LunchEventScreen(
     ) {
         println(uiState)
         Text(
-            text = stringResource(R.string.lunch_from, uiState.lunch.creator),
+            text = stringResource(R.string.lunch_from, uiState.lunch.creator, uiState.lunch.creator),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
         )

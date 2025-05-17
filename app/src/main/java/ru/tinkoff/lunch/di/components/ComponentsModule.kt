@@ -15,7 +15,6 @@ import ru.tinkoff.lunch.root.sign_up.di.SignUpModule
 import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsComponent
 import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsModule
 import ru.tinkoff.lunch.screens.main.di.MainComponent
-import ru.tinkoff.lunch.screens.main.di.MainModule
 import ru.tinkoff.lunch.screens.profile.di.ProfileComponent
 import ru.tinkoff.lunch.screens.profile.di.ProfileModule
 import javax.inject.Singleton
@@ -66,8 +65,7 @@ internal object ComponentsModule {
     @Provides
     @Singleton
     fun provideMainComponent(): MainComponent {
-        return object : MainComponent(),
-            MainModule by MainModule() {}
+        return object : MainComponent() {}
     }
 
     @Provides

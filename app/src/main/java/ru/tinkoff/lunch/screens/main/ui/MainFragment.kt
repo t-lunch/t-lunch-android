@@ -1,99 +1,81 @@
 package ru.tinkoff.lunch.screens.main.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import by.kirich1409.viewbindingdelegate.viewBinding
+import android.view.ViewGroup
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.runtime.getValue
+import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.github.terrakok.cicerone.Router
 import dagger.hilt.android.AndroidEntryPoint
-import ru.tinkoff.kotea.android.lifecycle.collectOnCreate
-import ru.tinkoff.kotea.android.storeViaViewModel
-import ru.tinkoff.lunch.screens.main.di.MainComponent
-import ru.tinkoff.lunch.R
-import ru.tinkoff.lunch.databinding.FragmentMainBinding
-import ru.tinkoff.lunch.navigation.Screens
-import ru.tinkoff.lunch.screens.main.presentation.MainNews
-import ru.tinkoff.lunch.screens.main.presentation.MainUiEvent
+import ru.tinkoff.lunch.navigation.Screens.LunchDetailsScreen
+import ru.tinkoff.lunch.screens.main.compose.MainFragmentScreen
+import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentNews
 import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet
 import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet.CreateLunchBottomSheetListener
-import ru.tinkoff.lunch.screens.main.ui.mapper.MainUiState
-import ru.tinkoff.lunch.screens.main.ui.recycler.MainFragmentHolderFactory
-import ru.tinkoff.lunch.utils.views.FlowFragment
+import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentViewModel
 import ru.tinkoff.lunch.utils.views.showAlertSnackbar
-import ru.tinkoff.mobile.tech.ti_recycler.base.ViewTyped
-import ru.tinkoff.mobile.tech.ti_recycler_coroutines.TiRecyclerCoroutines
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : FlowFragment<MainComponent>(R.layout.fragment_main),
-    CreateLunchBottomSheetListener {
+class MainFragment : Fragment(), CreateLunchBottomSheetListener {
 
-    private val store by storeViaViewModel { component.getMainStore() }
-    private val binding by viewBinding(FragmentMainBinding::bind)
+    @Inject
+    lateinit var router: Router
 
-    private lateinit var recycler: TiRecyclerCoroutines<ViewTyped>
     private lateinit var bottomSheet: CreateLunchBottomSheet
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        store.collectOnCreate(
-            fragment = this,
-            uiStateMapper = component.uiStateMapper,
-            stateCollector = ::render,
-            newsCollector = ::news,
-        )
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                MaterialTheme {
+                    val viewModel = hiltViewModel<MainFragmentViewModel>()
+                    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initRecycler()
-        binding.fab.setOnClickListener { store.dispatch(MainUiEvent.CreateLunchClicked) }
-    }
+                    MainFragmentScreen(
+                        uiState = state,
+                        onEvent = viewModel::onEvent,
+                    )
 
-    private fun initRecycler() {
-        recycler = TiRecyclerCoroutines(
-            binding.recyclerView,
-            MainFragmentHolderFactory(
-                onCardClick = { store.dispatch(MainUiEvent.LunchDetailsClicked(it)) },
-                onJoinClick = { /*store.dispatch(MainUiEvent.JoinLunchClicked)*/ },
-            )
-        )
-    }
+                    LaunchedEffect(Unit) {
+                        viewModel.news.collect { news ->
+                            when (news) {
+                                is MainFragmentNews.OpenCreateLunchScreen -> {
+                                    bottomSheet =
+                                        CreateLunchBottomSheet(listener = this@MainFragment)
+                                    bottomSheet.show(
+                                        childFragmentManager,
+                                        bottomSheet.tag
+                                    )
+                                }
 
-    private fun render(state: MainUiState) {
-        recycler.setItems(items = state.items)
-        controlShimmersVisibility(isLoading = state.areShimmersVisible)
-    }
+                                is MainFragmentNews.OpenLunchDetailsScreen -> {
+                                    router.navigateTo(LunchDetailsScreen(news.id))
+                                }
 
-    private fun news(news: MainNews) {
-        when (news) {
-            is MainNews.ShowError -> showAlertSnackbar(message = news.error.message)
-            is MainNews.OpenCreateLunchScreen -> showCreateLunchBottomSheet()
-            is MainNews.OpenLunchDetailsScreen -> {
-                router.navigateTo(Screens.LunchDetailsScreen(lunchId = news.id))
+                                is MainFragmentNews.ShowError -> {
+                                    showAlertSnackbar(message = news.error.message)
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
-    }
-
-    private fun showCreateLunchBottomSheet() {
-        bottomSheet = CreateLunchBottomSheet(listener = this)
-        bottomSheet.show(
-            childFragmentManager,
-            bottomSheet.tag
-        )
-    }
-
-    private fun controlShimmersVisibility(isLoading: Boolean) = with(binding) {
-        if (isLoading) {
-            shimmers.startShimmer()
-        } else {
-            shimmers.apply {
-                stopShimmer()
-                visibility = View.GONE
-            }
-            recyclerView.visibility = View.VISIBLE
         }
     }
 
     override fun onLunchCreated() {
         // todo: store.dispatch(MainUiEvent.LunchCreationConfirmed(lunchData))
-
     }
 }

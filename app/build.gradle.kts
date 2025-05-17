@@ -96,6 +96,9 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
 
+    // Pagination
+    implementation(libs.androidx.paging.runtime)
+
     // Compose
     val composeBom = platform("androidx.compose:compose-bom:2025.05.00")
     implementation(composeBom)
@@ -103,6 +106,10 @@ dependencies {
 
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
+
+    // Lifecycle & ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

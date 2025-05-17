@@ -1,4 +1,4 @@
-package ru.tinkoff.lunch.screens.main.ui.recycler.model
+package ru.tinkoff.lunch.screens.main.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

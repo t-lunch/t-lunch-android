@@ -12,4 +12,6 @@ data class LunchEvent(
     val time: String = "13:00",
     val description: String = "Lunch time!",
     val users: List<SignUpResponse> = emptyList(),
+    val name: String = "Петр",
+    val surname: String = "Петров",
 )
