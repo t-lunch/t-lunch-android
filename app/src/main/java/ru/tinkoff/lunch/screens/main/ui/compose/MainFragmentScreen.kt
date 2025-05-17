@@ -7,15 +7,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +29,7 @@ import ru.tinkoff.lunch.R
 import ru.tinkoff.lunch.common.compose.CardLunchShimmer
 import ru.tinkoff.lunch.common.compose.HeaderText
 import ru.tinkoff.lunch.common.lce.LceState
+import ru.tinkoff.lunch.network.api.events.model.LunchEvent
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentState
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainUiEvent
 
@@ -33,7 +39,11 @@ fun MainFragmentScreen(
     onEvent: (MainUiEvent) -> Unit,
 ) {
     Scaffold(
-        floatingActionButton = { /* todo */ },
+        floatingActionButton = {
+            if (uiState.lunches is LceState.Content) {
+                Fab(onClick = { onEvent(MainUiEvent.CreateLunchClicked) })
+            }
+        },
         containerColor = Color.White,
     ) { padding ->
         Box(
@@ -43,6 +53,7 @@ fun MainFragmentScreen(
         ) {
             when (uiState.lunches) {
                 is LceState.Loading -> Shimmers()
+
                 is LceState.Content -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
@@ -72,6 +83,21 @@ fun MainFragmentScreen(
 }
 
 @Composable
+private fun Fab(onClick: () -> Unit) {
+    FloatingActionButton(
+        onClick = { onClick() },
+        containerColor = Color.White,
+        shape = RoundedCornerShape(100),
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_plus),
+            contentDescription = null,
+            modifier = Modifier.size(32.dp)
+        )
+    }
+}
+
+@Composable
 private fun Shimmers() {
     Column(
         modifier = Modifier
@@ -94,7 +120,13 @@ private fun Shimmers() {
 private fun MainFragmentScreenPreview() {
     MainFragmentScreen(
         uiState = MainFragmentState(
-            lunches = LceState.Loading,
+            lunches = LceState.Content(
+                listOf(
+                    LunchEvent(),
+                    LunchEvent(),
+                    LunchEvent()
+                )
+            ),
         ),
         onEvent = { },
     )
