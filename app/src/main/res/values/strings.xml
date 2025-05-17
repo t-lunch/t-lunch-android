@@ -13,7 +13,7 @@
     <string name="telegram_contact" translatable="false">Ник в телеграм</string>
     <string name="office_pick" translatable="false">Офис</string>
     <string name="join" translatable="false">Присоединиться</string>
-    <string name="lunch_from" translatable="false">Обед от %s %s</string>
+    <string name="lunch_from" translatable="false">%s %s приглашает на обед</string>
     <string name="time_of_lunch" translatable="false">%s</string>
     <string name="avatar" translatable="false">Аватар</string>
     <string name="office" translatable="false">Офис</string>

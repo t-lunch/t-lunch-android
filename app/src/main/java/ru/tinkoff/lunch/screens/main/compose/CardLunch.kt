@@ -51,7 +51,7 @@ fun CardLunch(
                 text = stringResource(R.string.lunch_from, "Петр", "Петров"),
                 fontSize = 17.sp,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.StartEllipsis,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
