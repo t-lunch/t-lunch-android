@@ -35,10 +35,6 @@ class MainFragmentViewModel @Inject constructor(
     fun onEvent(event: MainUiEvent) {
         when (event) {
             MainUiEvent.Refresh -> loadLunches()
-            MainUiEvent.CreateLunchClicked -> viewModelScope.launch {
-                _news.emit(MainFragmentNews.OpenCreateLunchScreen)
-            }
-
             is MainUiEvent.LunchDetailsClicked -> viewModelScope.launch {
                 _news.emit(MainFragmentNews.OpenLunchDetailsScreen(event.id))
             }

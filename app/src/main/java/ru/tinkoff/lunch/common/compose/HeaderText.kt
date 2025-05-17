@@ -11,9 +11,12 @@ import androidx.compose.ui.unit.sp
 import ru.tinkoff.lunch.R
 
 @Composable
-fun HeaderText(text: String) {
+fun HeaderText(
+    modifier: Modifier = Modifier,
+    text: String,
+) {
     Text(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         text = text,
         color = colorResource(R.color.black),
         fontSize = 30.sp,

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -121,7 +122,8 @@ fun LunchEventScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.yellow))
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.yellow)),
+            shape = RoundedCornerShape(12.dp),
         ) {
             Text(
                 text = "Присоединиться",

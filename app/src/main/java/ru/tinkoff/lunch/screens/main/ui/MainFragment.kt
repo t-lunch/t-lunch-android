@@ -17,19 +17,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.tinkoff.lunch.navigation.Screens.LunchDetailsScreen
 import ru.tinkoff.lunch.screens.main.ui.compose.MainFragmentScreen
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentNews
-import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet
-import ru.tinkoff.lunch.screens.main.ui.dialogs.CreateLunchBottomSheet.CreateLunchBottomSheetListener
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentViewModel
 import ru.tinkoff.lunch.utils.views.showAlertSnackbar
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), CreateLunchBottomSheetListener {
+class MainFragment : Fragment() {
 
     @Inject
     lateinit var router: Router
-
-    private lateinit var bottomSheet: CreateLunchBottomSheet
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,19 +47,9 @@ class MainFragment : Fragment(), CreateLunchBottomSheetListener {
                     LaunchedEffect(Unit) {
                         viewModel.news.collect { news ->
                             when (news) {
-                                is MainFragmentNews.OpenCreateLunchScreen -> {
-                                    bottomSheet =
-                                        CreateLunchBottomSheet(listener = this@MainFragment)
-                                    bottomSheet.show(
-                                        childFragmentManager,
-                                        bottomSheet.tag
-                                    )
-                                }
-
                                 is MainFragmentNews.OpenLunchDetailsScreen -> {
                                     router.navigateTo(LunchDetailsScreen(news.id))
                                 }
-
                                 is MainFragmentNews.ShowError -> {
                                     showAlertSnackbar(message = news.error.message)
                                 }
@@ -73,9 +59,5 @@ class MainFragment : Fragment(), CreateLunchBottomSheetListener {
                 }
             }
         }
-    }
-
-    override fun onLunchCreated() {
-        // todo: store.dispatch(MainUiEvent.LunchCreationConfirmed(lunchData))
     }
 }
