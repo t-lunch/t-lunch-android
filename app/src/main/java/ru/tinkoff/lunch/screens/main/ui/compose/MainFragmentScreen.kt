@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,6 +29,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -48,11 +51,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import ru.tinkoff.lunch.common.lce.LceState
-import ru.tinkoff.lunch.network.api.events.model.LunchEvent
+import androidx.paging.compose.collectAsLazyPagingItems
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentState
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainUiEvent
+import ru.tinkoff.lunch.screens.main.ui.presentation.MainUiEvent.LunchDetailsClicked
+import ru.tinkoff.lunch.utils.views.HandlePagingItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,10 +67,16 @@ fun MainFragmentScreen(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showBottomSheet by remember { mutableStateOf(false) }
+    var isFabVisible by remember { mutableStateOf(false) }
+    val lunchesPagingItems = uiState.lunchesFlow.collectAsLazyPagingItems()
+    val lunchesListState = rememberLazyListState()
+
+    val pullToRefreshState = rememberPullToRefreshState()
+    var isRefreshing by remember { mutableStateOf(false) }
 
     Scaffold(
         floatingActionButton = {
-            if (uiState.lunches is LceState.Content) {
+            if (isFabVisible) {
                 Fab(onClick = {
                     showBottomSheet = true
                 })
@@ -73,38 +84,92 @@ fun MainFragmentScreen(
         },
         containerColor = Color.White,
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
+        PullToRefreshBox(
+            state = pullToRefreshState,
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                isRefreshing = true
+                lunchesPagingItems.refresh()
+            },
+            indicator = {
+                Indicator(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    isRefreshing = isRefreshing,
+                    state = pullToRefreshState,
+                    containerColor = Color.White,
+                    color = Color.Black,
+                )
+            }
         ) {
-            when (uiState.lunches) {
-                is LceState.Loading -> Shimmers()
-
-                is LceState.Content -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
-                        contentPadding = PaddingValues(
-                            top = 32.dp,
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 64.dp
-                        ),
-                    ) {
-                        item { HeaderText(text = stringResource(R.string.lunches)) }
-                        items(uiState.lunches.data) { lunch ->
-                            CardLunch(
-                                lunch = lunch,
-                                onCardClick = { onEvent(MainUiEvent.LunchDetailsClicked(lunch.id)) },
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                HandlePagingItems(lunchesPagingItems) {
+                    onRefresh {
+                        isFabVisible = false
+                        Shimmers()
+                    }
+                    onEmpty {
+                        isFabVisible = true
+                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)) {
+                            HeaderText(text = stringResource(R.string.lunches))
+                            Text(
+                                modifier = Modifier.padding(top = 8.dp),
+                                text = stringResource(R.string.no_lunches),
+                                fontSize = 16.sp,
+                                lineHeight = 18.sp,
                             )
                         }
                     }
+                    onError {
+                        isFabVisible = false
+                        isRefreshing = false
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.Center),
+                            contentPadding = PaddingValues(vertical = 300.dp),
+                        ) {
+                            item {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = stringResource(R.string.something_went_wrong),
+                                    textAlign = TextAlign.Center,
+                                    lineHeight = 20.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                            }
+                        }
+                    }
+                    onSuccess {
+                        isFabVisible = true
+                        isRefreshing = false
+
+                        LazyColumn(
+                            state = lunchesListState,
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            contentPadding = PaddingValues(
+                                top = 32.dp,
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 64.dp
+                            ),
+                        ) {
+                            item { HeaderText(text = stringResource(R.string.lunches)) }
+                            onPagingItems(key = { it.id }) { lunch ->
+                                CardLunch(
+                                    lunch = lunch,
+                                    onCardClick = { onEvent(LunchDetailsClicked(lunch.id)) },
+                                )
+                            }
+                        }
+                    }
                 }
-
-                is LceState.Error -> Unit
             }
-
         }
 
         if (showBottomSheet) {
@@ -297,23 +362,6 @@ private fun ChipItem(
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MainFragmentScreenPreview() {
-    MainFragmentScreen(
-        uiState = MainFragmentState(
-            lunches = LceState.Content(
-                listOf(
-                    LunchEvent(),
-                    LunchEvent(),
-                    LunchEvent()
-                )
-            ),
-        ),
-        onEvent = { },
-    )
 }
 
 @Preview(showBackground = true)

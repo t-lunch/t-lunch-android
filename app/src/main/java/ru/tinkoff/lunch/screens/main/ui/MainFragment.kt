@@ -18,7 +18,6 @@ import ru.tinkoff.lunch.navigation.Screens.LunchDetailsScreen
 import ru.tinkoff.lunch.screens.main.ui.compose.MainFragmentScreen
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentNews
 import ru.tinkoff.lunch.screens.main.ui.presentation.MainFragmentViewModel
-import ru.tinkoff.lunch.utils.views.showAlertSnackbar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,9 +48,6 @@ class MainFragment : Fragment() {
                             when (news) {
                                 is MainFragmentNews.OpenLunchDetailsScreen -> {
                                     router.navigateTo(LunchDetailsScreen(news.id))
-                                }
-                                is MainFragmentNews.ShowError -> {
-                                    showAlertSnackbar(message = news.error.message)
                                 }
                             }
                         }

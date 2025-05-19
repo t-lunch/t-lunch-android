@@ -48,7 +48,7 @@ fun CardLunch(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.lunch_from, "Петр", "Петров"),
+                text = stringResource(R.string.lunch_from, lunch.name, lunch.surname),
                 fontSize = 17.sp,
                 maxLines = 1,
                 overflow = TextOverflow.StartEllipsis,
@@ -61,7 +61,7 @@ fun CardLunch(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 InfoCircle(icon = R.drawable.ic_map_marker, text = lunch.place)
-                InfoCircle(icon = R.drawable.ic_clock, text = lunch.time)
+                InfoCircle(icon = R.drawable.ic_clock, text = lunch.time.toString())
                 InfoCircle(
                     icon = R.drawable.ic_participants,
                     text = pluralStringResource(
@@ -106,10 +106,9 @@ private fun CardLunchPreview() {
     CardLunch(
         lunch = LunchEvent(
             id = "123",
-            creator = "nightshift48",
             place = "Кухня",
             numberOfParticipants = 2,
-            time = "13:00",
+            timeCustom = "13:00",
             description = "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                     "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                     "Какое-то примечание (не редактируемое)",

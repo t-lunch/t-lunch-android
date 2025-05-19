@@ -99,6 +99,7 @@ dependencies {
 
     // Pagination
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
 
     // Compose
     val composeBom = platform("androidx.compose:compose-bom:2025.05.00")

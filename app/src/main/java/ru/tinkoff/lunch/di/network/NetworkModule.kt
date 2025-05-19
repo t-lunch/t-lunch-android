@@ -23,11 +23,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.tinkoff.lunch.network.api.auth.AuthApi
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.api.events.LunchEventsApi
+import ru.tinkoff.lunch.network.api.events.pagination.LunchEventsSource
 import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepository
 import ru.tinkoff.lunch.network.common.authenticator.AuthAuthenticator
 import ru.tinkoff.lunch.network.common.interceptor.AuthInterceptor
 import ru.tinkoff.lunch.network.common.token.JwtTokenDataStore
 import ru.tinkoff.lunch.network.common.token.JwtTokenManager
+import ru.tinkoff.lunch.network.common.user_info.UserInfoDataStore
+import ru.tinkoff.lunch.network.common.user_info.UserInfoManager
 import javax.inject.Singleton
 
 private const val USER_PREFERENCES = "user_preferences"
@@ -57,6 +60,14 @@ object NetworkModule {
         dataStore: DataStore<Preferences>
     ): JwtTokenManager {
         return JwtTokenDataStore(dataStore = dataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoManager(
+        dataStore: DataStore<Preferences>
+    ): UserInfoManager {
+        return UserInfoDataStore(dataStore)
     }
 
     @Singleton
@@ -119,9 +130,21 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideLunchEventsSource(
+        api: LunchEventsApi,
+        userInfoManager: UserInfoManager,
+    ): LunchEventsSource {
+        return LunchEventsSource(
+            api = api,
+            userInfoManager = userInfoManager,
+        )
+    }
+
+    @Singleton
+    @Provides
     fun provideLunchesRepository(
-        lunchEventsApi: LunchEventsApi,
+        lunchEventsSource: LunchEventsSource,
     ): LunchEventsRepository {
-        return LunchEventsRepository(lunchEventsApi = lunchEventsApi)
+        return LunchEventsRepository(lunchEventsSource = lunchEventsSource)
     }
 }

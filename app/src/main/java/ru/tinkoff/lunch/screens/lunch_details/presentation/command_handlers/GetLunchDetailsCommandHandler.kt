@@ -15,10 +15,9 @@ class GetLunchDetailsCommandHandler : LunchDetailsCommandsFlowHandler {
         return commands.filterIsInstance<LunchDetailsCommand.GetLunchDetails>().transform {
             val lunch = LunchEvent(
                 id = "123",
-                creator = "nightshift48",
                 place = "Кухня",
                 numberOfParticipants = 2,
-                time = "13:00",
+                timeCustom = "13:00",
                 description = "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                         "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                         "Какое-то примечание (не редактируемое)",

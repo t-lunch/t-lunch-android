@@ -42,6 +42,9 @@
     <string name="notes_hint" translatable="false">Место сбора и т.п. (необязательно)</string>
     <string name="create" translatable="false">Создать</string>
 
+    <string name="no_lunches" translatable="false">Пока что нет событий.\nБудьте первым, кто его создаст!</string>
+    <string name="something_went_wrong" translatable="false">Что-то пошло не так.\nПопробуйте снова.</string>
+
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>
         <item quantity="few">%d участника</item>

@@ -3,17 +3,17 @@ package ru.tinkoff.lunch.screens.main.ui.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.tinkoff.lunch.common.lce.LceState
-import ru.tinkoff.lunch.network.api.events.model.LunchEvent
 import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepository
 import javax.inject.Inject
 
@@ -22,44 +22,36 @@ class MainFragmentViewModel @Inject constructor(
     private val repository: LunchEventsRepository,
 ) : ViewModel() {
 
+    private var searchJob: Job? = null
+
     private val _uiState = MutableStateFlow(MainFragmentState())
-    val uiState: StateFlow<MainFragmentState> = _uiState.asStateFlow()
+    val uiState: StateFlow<MainFragmentState> = _uiState.onStart {
+        observeLunches()
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _uiState.value)
 
     private val _news = MutableSharedFlow<MainFragmentNews>()
     val news: SharedFlow<MainFragmentNews> = _news.asSharedFlow()
 
-    init {
-        loadLunches()
-    }
-
     fun onEvent(event: MainUiEvent) {
         when (event) {
-            MainUiEvent.Refresh -> loadLunches()
             is MainUiEvent.LunchDetailsClicked -> viewModelScope.launch {
                 _news.emit(MainFragmentNews.OpenLunchDetailsScreen(event.id))
             }
         }
     }
 
-    private fun loadLunches() {
+    private fun observeLunches() {
         viewModelScope.launch {
-            try {
-                delay(1000)
-                // todo: val list = repository.getLunchEvents()
-                _uiState.update {
-                    it.copy(
-                        lunches = LceState.Content(
-                            listOf(
-                                LunchEvent(),
-                                LunchEvent(),
-                                LunchEvent()
-                            )
-                        ),
-                    )
-                }
-            } catch (e: Throwable) {
-                _news.emit(MainFragmentNews.ShowError(e))
-            }
+            searchJob = null
+            searchJob = getLunchesFromPager()
+        }
+    }
+
+    private fun getLunchesFromPager() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(
+                lunchesFlow = repository.getLunchEvents()
+            )
         }
     }
 }
