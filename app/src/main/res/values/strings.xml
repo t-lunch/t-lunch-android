@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Т-Обеды</string>
+    <string name="lunches" translatable="false">Обеды</string>
     <string name="enter" translatable="false">Войти</string>
     <string name="password" translatable="false">Пароль</string>
     <string name="login" translatable="false">Логин</string>
@@ -12,7 +13,7 @@
     <string name="telegram_contact" translatable="false">Ник в телеграм</string>
     <string name="office_pick" translatable="false">Офис</string>
     <string name="join" translatable="false">Присоединиться</string>
-    <string name="lunch_from" translatable="false">Обед от %s</string>
+    <string name="lunch_from" translatable="false">%s %s приглашает на обед</string>
     <string name="time_of_lunch" translatable="false">%s</string>
     <string name="avatar" translatable="false">Аватар</string>
     <string name="office" translatable="false">Офис</string>
@@ -40,6 +41,9 @@
     <string name="notes" translatable="false">Примечания</string>
     <string name="notes_hint" translatable="false">Место сбора и т.п. (необязательно)</string>
     <string name="create" translatable="false">Создать</string>
+
+    <string name="no_lunches" translatable="false">Пока что нет событий.\nБудьте первым, кто его создаст!</string>
+    <string name="something_went_wrong" translatable="false">Что-то пошло не так.\nПопробуйте снова.</string>
 
     <plurals name="number_of_participants">
         <item quantity="one">%d участник</item>

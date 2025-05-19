@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,21 +51,14 @@ fun LunchEventScreen(
 ) {
     val uiState by state.collectState()
 
-    LaunchedEffect(Unit) {
-        state.collect {
-            println(it)
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
             .padding(horizontal = 16.dp, vertical = 32.dp)
     ) {
-        println(uiState)
         Text(
-            text = stringResource(R.string.lunch_from, uiState.lunch.creator),
+            text = stringResource(R.string.lunch_from, uiState.lunch.name, uiState.lunch.surname),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -77,7 +70,7 @@ fun LunchEventScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             InfoItem(icon = R.drawable.ic_clock, text = uiState.lunch.place)
-            InfoItem(icon = R.drawable.ic_profile, text = uiState.lunch.time)
+            InfoItem(icon = R.drawable.ic_profile, text = uiState.lunch.timeCustom!!)
             InfoItem(
                 icon = R.drawable.ic_participants,
                 text = pluralStringResource(
@@ -121,7 +114,8 @@ fun LunchEventScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.yellow))
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.yellow)),
+            shape = RoundedCornerShape(12.dp),
         ) {
             Text(
                 text = "Присоединиться",
@@ -192,17 +186,16 @@ private fun ParticipantItem(
     locale = "ru",
 )
 @Composable
-fun LunchEventScreenPreview() {
+private fun LunchEventScreenPreview() {
     MaterialTheme {
         LunchEventScreen(
             state = MutableStateFlow(
                 LunchDetailsState(
                     lunch = LunchEvent(
                         id = "123",
-                        creator = "nightshift48",
                         place = "Кухня",
                         numberOfParticipants = 2,
-                        time = "13:00",
+                        timeCustom = "13:00",
                         description = "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                                 "Какое-то примечание (не редактируемое) Какое-то примечание (не редактируемое) " +
                                 "Какое-то примечание (не редактируемое)",

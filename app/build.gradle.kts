@@ -3,6 +3,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-parcelize")
 }
 
@@ -62,7 +63,7 @@ dependencies {
     implementation(libs.coil)
 
     // Shimmers
-    implementation(libs.shimmer)
+    implementation(libs.compose.shimmer)
 
     // Kotea
     implementation(libs.kotea.core)
@@ -96,6 +97,10 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
 
+    // Pagination
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+
     // Compose
     val composeBom = platform("androidx.compose:compose-bom:2025.05.00")
     implementation(composeBom)
@@ -103,6 +108,10 @@ dependencies {
 
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
+
+    // Lifecycle & ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

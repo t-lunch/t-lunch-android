@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.common.token.JwtTokenManager
+import ru.tinkoff.lunch.network.common.user_info.UserInfoManager
 import ru.tinkoff.lunch.root.di.EntrypointComponent
 import ru.tinkoff.lunch.root.di.EntrypointModule
 import ru.tinkoff.lunch.root.sign_in.di.SignInComponent
@@ -15,7 +16,6 @@ import ru.tinkoff.lunch.root.sign_up.di.SignUpModule
 import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsComponent
 import ru.tinkoff.lunch.screens.lunch_details.di.LunchDetailsModule
 import ru.tinkoff.lunch.screens.main.di.MainComponent
-import ru.tinkoff.lunch.screens.main.di.MainModule
 import ru.tinkoff.lunch.screens.profile.di.ProfileComponent
 import ru.tinkoff.lunch.screens.profile.di.ProfileModule
 import javax.inject.Singleton
@@ -55,19 +55,20 @@ internal object ComponentsModule {
     fun provideSignUpComponent(
         authRepository: AuthRepository,
         tokenManager: JwtTokenManager,
+        userInfoManager: UserInfoManager,
     ): SignUpComponent {
         return object : SignUpComponent(),
             SignUpModule by SignUpModule(
                 authRepository = authRepository,
                 tokenManager = tokenManager,
+                userInfoManager = userInfoManager,
             ) {}
     }
 
     @Provides
     @Singleton
     fun provideMainComponent(): MainComponent {
-        return object : MainComponent(),
-            MainModule by MainModule() {}
+        return object : MainComponent() {}
     }
 
     @Provides

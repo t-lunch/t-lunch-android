@@ -3,6 +3,7 @@ package ru.tinkoff.lunch.root.sign_up.di
 import ru.tinkoff.kotea.core.KoteaStore
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.common.token.JwtTokenManager
+import ru.tinkoff.lunch.network.common.user_info.UserInfoManager
 import ru.tinkoff.lunch.root.sign_up.presentation.SignUpState
 import ru.tinkoff.lunch.root.sign_up.presentation.SignUpStore
 import ru.tinkoff.lunch.root.sign_up.presentation.SignUpUpdate
@@ -18,6 +19,7 @@ internal interface SignUpModule {
 internal fun SignUpModule(
     authRepository: AuthRepository,
     tokenManager: JwtTokenManager,
+    userInfoManager: UserInfoManager,
 ) = object : SignUpModule {
 
     override fun getSignUpStore(): SignUpStore {
@@ -28,6 +30,7 @@ internal fun SignUpModule(
                 SignUpCommandHandler(
                     authRepository = authRepository,
                     tokenManager = tokenManager,
+                    userInfoManager = userInfoManager,
                 ),
             ),
             update = SignUpUpdate(),

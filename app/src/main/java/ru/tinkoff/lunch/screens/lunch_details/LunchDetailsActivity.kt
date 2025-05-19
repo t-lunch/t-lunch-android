@@ -48,7 +48,6 @@ class LunchDetailsActivity : FlowActivity<LunchDetailsComponent>(R.layout.activi
     private fun news(news: LunchDetailsNews) {
         when (news) {
             is LunchDetailsNews.OpenTelegram -> {
-                println(news.telegramId)
                 val intent = Intent(Intent.ACTION_VIEW, news.telegramId.toTelegramUri())
                 startActivity(intent)
             }
