@@ -7,6 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.transform
+import ru.tinkoff.lunch.network.api.auth.model.login.LoginBody
 import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.common.token.JwtTokenManager
 import ru.tinkoff.lunch.network.common.user_info.UserInfoManager
@@ -26,13 +27,15 @@ class SignUpCommandHandler(
             delay(350)
             authRepository.signUp(body = command.signUpBody)
                 .suspendOnSuccess {
-                    with(this.data) {
-                        // todo: do sign in and save tokens
-                        tokenManager.saveAccessJwt(token = "some access token") // todo
-                        tokenManager.saveRefreshJwt(token = "some refresh token") // todo
-
-                        userInfoManager.saveUserId(id = userId)
-
+                    userInfoManager.saveUserId(id = this.data.userId)
+                    authRepository.login(
+                        body = LoginBody(
+                            email = command.signUpBody.email,
+                            password = command.signUpBody.password
+                        )
+                    ).suspendOnSuccess {
+                        tokenManager.saveAccessJwt(token = this.data.accessToken)
+                        tokenManager.saveRefreshJwt(token = this.data.refreshToken)
                         emit(SignUpCommandResultEvent.SignUpSuccess)
                     }
                 }
