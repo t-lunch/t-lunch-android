@@ -39,8 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:text="pasha" />
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,8 +57,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:singleLine="true"
-                android:text="12345678" />
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

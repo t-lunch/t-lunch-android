@@ -113,14 +113,22 @@ fun MainFragmentScreen(
                     }
                     onEmpty {
                         isFabVisible = true
-                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp)) {
-                            HeaderText(text = stringResource(R.string.lunches))
-                            Text(
-                                modifier = Modifier.padding(top = 8.dp),
-                                text = stringResource(R.string.no_lunches),
-                                fontSize = 16.sp,
-                                lineHeight = 18.sp,
-                            )
+                        isRefreshing = false
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp, vertical = 32.dp),
+                        ) {
+                            item { HeaderText(text = stringResource(R.string.lunches)) }
+                            item {
+                                Text(
+                                    modifier = Modifier.padding(top = 8.dp),
+                                    text = stringResource(R.string.no_lunches),
+                                    fontSize = 16.sp,
+                                    lineHeight = 18.sp,
+                                )
+                            }
                         }
                     }
                     onError {

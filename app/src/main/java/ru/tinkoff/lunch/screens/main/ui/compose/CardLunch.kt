@@ -28,6 +28,9 @@ import ru.tinkoff.lunch.R
 import ru.tinkoff.lunch.common.compose.DetailIcon
 import ru.tinkoff.lunch.network.api.auth.model.signup.SignUpResponse
 import ru.tinkoff.lunch.network.api.events.model.LunchEvent
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun CardLunch(
@@ -61,7 +64,7 @@ fun CardLunch(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 InfoCircle(icon = R.drawable.ic_map_marker, text = lunch.place)
-                InfoCircle(icon = R.drawable.ic_clock, text = lunch.time.toString())
+                InfoCircle(icon = R.drawable.ic_clock, text = formatTime(lunch.time))
                 InfoCircle(
                     icon = R.drawable.ic_participants,
                     text = pluralStringResource(
@@ -132,4 +135,9 @@ private fun CardLunchPreview() {
             ),
         )
     )
+}
+
+private fun formatTime(date: Date): String {
+    val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return formatter.format(date)
 }
