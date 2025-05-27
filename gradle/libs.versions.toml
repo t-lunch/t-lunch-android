@@ -8,7 +8,9 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 hilt = "2.56.2"
+kotlinxCoroutinesTest = "1.10.2"
 lifecycleViewmodelCompose = "2.9.0"
+mockk = "1.14.2"
 pagingCompose = "3.3.6"
 pagingRuntime = "3.3.6"
 retrofit = "2.11.0"
@@ -32,6 +34,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 cicerone = { module = "com.github.terrakok:cicerone", version = "7.1" }
 
 # Recycler
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 ti-recycler-coroutines = { group = "tiRecyclerCoroutines", module = "ru.tinkoff.mobile:ti-recycler-coroutines", version = "2.2.1" }
 
 # Coil

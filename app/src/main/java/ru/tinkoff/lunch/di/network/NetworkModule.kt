@@ -25,6 +25,7 @@ import ru.tinkoff.lunch.network.api.auth.repository.AuthRepository
 import ru.tinkoff.lunch.network.api.events.LunchEventsApi
 import ru.tinkoff.lunch.network.api.events.pagination.LunchEventsSource
 import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepository
+import ru.tinkoff.lunch.network.api.events.repository.LunchEventsRepositoryImpl
 import ru.tinkoff.lunch.network.common.authenticator.AuthAuthenticator
 import ru.tinkoff.lunch.network.common.interceptor.AuthInterceptor
 import ru.tinkoff.lunch.network.common.token.JwtTokenDataStore
@@ -145,6 +146,6 @@ object NetworkModule {
     fun provideLunchesRepository(
         lunchEventsSource: LunchEventsSource,
     ): LunchEventsRepository {
-        return LunchEventsRepository(lunchEventsSource = lunchEventsSource)
+        return LunchEventsRepositoryImpl(lunchEventsSource = lunchEventsSource)
     }
 }
