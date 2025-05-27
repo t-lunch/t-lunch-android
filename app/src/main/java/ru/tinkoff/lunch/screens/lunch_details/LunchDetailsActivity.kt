@@ -51,6 +51,7 @@ class LunchDetailsActivity : FlowActivity<LunchDetailsComponent>(R.layout.activi
                 val intent = Intent(Intent.ACTION_VIEW, news.telegramId.toTelegramUri())
                 startActivity(intent)
             }
+            else -> Unit
         }
     }
 }

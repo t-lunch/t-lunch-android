@@ -7,11 +7,15 @@ import kotlinx.coroutines.flow.Flow
 import ru.tinkoff.lunch.network.api.events.model.LunchEvent
 import ru.tinkoff.lunch.network.api.events.pagination.LunchEventsSource
 
-class LunchEventsRepository(
-    private val lunchEventsSource: LunchEventsSource,
-) {
+interface LunchEventsRepository {
+    fun getLunchEvents(): Flow<PagingData<LunchEvent>>
+}
 
-    fun getLunchEvents(): Flow<PagingData<LunchEvent>> {
+class LunchEventsRepositoryImpl(
+    private val lunchEventsSource: LunchEventsSource,
+) : LunchEventsRepository {
+
+    override fun getLunchEvents(): Flow<PagingData<LunchEvent>> {
         val pager = Pager(
             config = PagingConfig(
                 pageSize = 10,

@@ -15,7 +15,7 @@ internal class LunchDetailsUpdate :
 
     private fun NextBuilder.handleUiEvent(event: LunchDetailsUiEvent) {
         return when (event) {
-            is LunchDetailsUiEvent.JoinLunch -> Unit // todo
+            is LunchDetailsUiEvent.JoinLunch -> news(LunchDetailsNews.JoinLunch)
             is LunchDetailsUiEvent.OnTelegramClicked -> {
                 news(LunchDetailsNews.OpenTelegram(event.telegramId))
             }
